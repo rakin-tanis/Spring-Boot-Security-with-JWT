@@ -1,0 +1,67 @@
+server:
+  port: 8080
+  error:
+    path: /error
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?user=${DATABASE_USER}&password=${DATABASE_PASSWORD}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    locations: classpath:db/migration
+  mail:
+    host: 'localhost'
+    port: 25
+    protocol: smtp
+    username: "security@mail.com"
+    password: "there is no spoon"
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+          timeout: 8000
+  main:
+    allow-bean-definition-overriding: true
+
+support:
+  applicationName: "Security Application"
+  email: support@mail.com
+
+logging:
+  level:
+    org.springframework.messaging: trace
+    org.springframework.web.socket: trace
+
+login-attempt-cache:
+  incorrectAttemptCount: 5
+  durationInMinutes: 60
+
+security:
+  jwt:
+    secretKey: JWTSuperSecretKeyJWTSuperSecretKeyJWTSuperSecretKeyJWTSuperSecretKeyJWTSuperSecretKeyJWTSuperSecretKey
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 14
+    issuer: project owner
+    audience: audience
+
